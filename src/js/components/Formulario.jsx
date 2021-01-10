@@ -4,20 +4,6 @@ const Formulario = () => {
 
   return (
     <div>
-      <div className="">
-        <h1>Producto</h1>
-        <form action="">
-          <div className="ui form">
-            {/* <div className="one fields"> */}
-              <div className="field">
-                <select name="" id="">
-                  <option value="0">Productos ... </option> 
-                </select>
-              </div>
-            {/* </div> */}
-          </div>
-        </form>
-      </div>
       <div>
         <h1>Formulario</h1>
         <form action="" >
