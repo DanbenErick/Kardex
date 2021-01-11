@@ -5,13 +5,18 @@ import axios from 'axios'
 const Item = () => {
 
   const [ item, setItem ] = useState({
-    name: null
+    nombre: '',
+    items: []
   })
 
   const getItems = (event) => {
     axios.get('/get-products')
       .then( response => {
         console.log('Datos:',response.data)
+        setItem({
+          nombre: item.nombre,
+          items: response.data
+        })
       })
       .catch(err => {
         console.log('Ocurrio un error')
@@ -37,9 +42,15 @@ const Item = () => {
               <div className="field">
                 <select onChange={handleChangeItem} value={item.name || ''}>
                   <option value="0">Item ... </option> 
-                  <option value="1">Pastillas </option> 
-                  <option value="2">Cake</option> 
-                  <option value="3">BlueBerris</option> 
+                  {
+                    item != null 
+                    ?
+                      item.items.forEach(element => {
+                        <option value={element.id}>{element.nombre}</option> 
+                      })
+                    :
+                      <option value="">No Hay valores</option>
+                  }
                 </select>
               </div>
             {/* </div> */}
