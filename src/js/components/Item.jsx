@@ -1,10 +1,22 @@
 import React, { useState } from 'react'
+import axios from 'axios'
+
 
 const Item = () => {
 
   const [ item, setItem ] = useState({
     name: null
   })
+
+  const getItems = (event) => {
+    axios.get('/get-products')
+      .then( response => {
+        console.log('Datos:',response.data)
+      })
+      .catch(err => {
+        console.log('Ocurrio un error')
+      })
+  }
 
   const handleChangeItem = (event) => {
     setItem({
@@ -23,7 +35,7 @@ const Item = () => {
           <div className="ui form">
             {/* <div className="one fields"> */}
               <div className="field">
-                <select onChange={handleChangeItem} value={item.name}>
+                <select onChange={handleChangeItem} value={item.name || ''}>
                   <option value="0">Item ... </option> 
                   <option value="1">Pastillas </option> 
                   <option value="2">Cake</option> 
@@ -33,6 +45,7 @@ const Item = () => {
             {/* </div> */}
           </div>
         </form>
+        <button onClick={getItems}>Probar</button>
       </div>
     </div>
   )

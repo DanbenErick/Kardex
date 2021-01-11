@@ -6,10 +6,10 @@ const Tabla = function() {
       <table className="ui celled table">
         <thead>
           <tr>
-            <th colspan="3"></th>
-            <th colspan="2">Entrada</th>
-            <th colspan="2">Salida</th>
-            <th colspan="2">Saldo</th>
+            <th colSpan="3"></th>
+            <th colSpan="2">Entrada</th>
+            <th colSpan="2">Salida</th>
+            <th colSpan="2">Saldo</th>
           </tr>
           <tr>
             <th>Fecha</th>
