@@ -2,7 +2,8 @@ CREATE DATABASE almacen;
 
 CREATE TABLE productos(
   id serial not null PRIMARY KEY,
-  nombre varchar(200) not null
+  nombre varchar(200) not null,
+  cantidad int not null
 );
 
 CREATE TABLE kardex(
@@ -18,4 +19,4 @@ CREATE TABLE kardex(
   saldo_total int not null,
   id_producto int not null,
   CONSTRAINT FK_kardex_producto FOREIGN KEY (id_producto) REFERENCES productos(id)
-)
+);
