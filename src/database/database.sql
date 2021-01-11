@@ -1,12 +1,12 @@
 CREATE DATABASE almacen;
 
 CREATE TABLE productos(
-  id serial not null,
+  id serial not null PRIMARY KEY,
   nombre varchar(200) not null
 );
 
 CREATE TABLE kardex(
-  id serial not null,
+  id serial not null PRIMARY KEY,
   fecha date not null,
   detalle varchar(200) not null,
   valor_unitario int not null,
