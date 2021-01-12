@@ -42,7 +42,7 @@ const Item = () => {
                 <select> 
                   {
                     item.items.map(element => (
-                      <option value={element.id}>{element.nombre}</option>
+                      <option key={element.id} value={element.id}>{element.nombre}</option>
                     ))
                   }
                 </select>
