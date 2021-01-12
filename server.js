@@ -16,24 +16,34 @@ client.connect()
 
 app.use(express.static("dist"))
 
-app.get('/', function(req, res) {
+// Rutas 
 
-  res.sendFile(path.join(__dirname, 'index.html'))
-  
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'index.html'))  
 })
 
 app.get('/get-products', (req, res) => {
-  
   const sql = "SELECT * FROM productos"
-
   client.query(sql, (error, response) => {
     if(error) {
       console.log('Ocurrio un error')
     }
     res.json(response.rows)
-    // console.log('Datos:', JSON.parse(res.rows))
   })
+})
 
+app.get('/get-kardex', (req, res) => {
+  const sql = ""
+})
+
+app.get('/get-kardex-product/:id', (req, res) => {
+  const sql = `SELECT * FROM kardex WHERE id_producto = ${req.params.id}`
+  client.query(sql, (err, response) => {
+    if(err) {
+      console.log("Ocurrio un error")
+    }
+    res.json(response.rows)  
+  })
 })
 
 

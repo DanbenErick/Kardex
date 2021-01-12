@@ -20,3 +20,5 @@ CREATE TABLE kardex(
   id_producto int not null,
   CONSTRAINT FK_kardex_producto FOREIGN KEY (id_producto) REFERENCES productos(id)
 );
+
+INSERT INTO kardex (fecha, detalle, valor_unitario, entrada_cantidad, entrada_total, salida_cantidad, salida_total, saldo_cantidad, saldo_total, id_producto ) VALUES ('10-10-10', 'Compras', 12,12,12,0,0,22,22,1);
