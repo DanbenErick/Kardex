@@ -28,7 +28,7 @@ const Item = () => {
   },[])
 
   const handleChangeItem = (event) => {
-    
+    console.log("Seleccionaste el item N°:",event.target.value)
   }
 
   return (
@@ -39,7 +39,7 @@ const Item = () => {
           <div className="ui form">
             {/* <div className="one fields"> */}
               <div className="field">
-                <select> 
+                <select onChange={handleChangeItem}> 
                   {
                     item.items.map(element => (
                       <option key={element.id} value={element.id}>{element.nombre}</option>
