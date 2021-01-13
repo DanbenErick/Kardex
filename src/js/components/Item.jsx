@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
+import { connect } from 'react-redux'
 
 
 
-const Item = () => {
+
+const Item = (props) => {
   
   const [ item, setItem ] = useState({
     items: []
   })
 
-  const getItems = () => {
+  const getItems = _ => {
     axios.get('/get-products')
       .then( response => {
         setItem({
           items: response.data
-        })
+        })        
       })
       .catch(err => {
         console.log('Ocurrio un error', err)
@@ -28,7 +30,7 @@ const Item = () => {
   },[])
 
   const handleChangeItem = (event) => {
-    console.log("Seleccionaste el item N°:",event.target.value)
+    props.setIdProductKardex(event.target.value)
   }
 
   return (
@@ -55,4 +57,18 @@ const Item = () => {
   )
 }
 
-export default Item
+
+const mapStateToProps = state => ({
+  items: state.items
+})
+
+const mapDispatchToProps = dispatch => ({
+  setIdProductKardex(id) {
+    dispatch({
+      type: 'GET_KARDEX_PRODUCT',
+      product_selected: id
+    })
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Item)
