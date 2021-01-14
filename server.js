@@ -4,6 +4,9 @@ const { Client } = require('pg')
 
 const app = express()
 
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
 const client = new Client({
   host: 'localhost',
   port: 5432,
@@ -48,7 +51,46 @@ app.get('/get-kardex-product/:id', (req, res) => {
 
 
 app.post('/save-product', (req, res) => {
+  const sql = "INSERT INTO kardex (fecha, detalle, valor_unitario, entrada_cantidad, entrada_total, salida_cantidad, salida_total, saldo_cantidad, saldo_total, id_producto) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)"
 
+  if(req.body.opcion == 1) {
+    // Entrada
+    const data = [
+      new Date(req.body.fecha),
+      req.body.detalle,
+      req.body.valor_unitario,
+      req.body.cantidad,
+      req.body.cantidad,
+      0,
+      0,
+      req.body.cantidad,
+      req.body.cantidad,
+      req.body.id_product]
+      client.query(sql, data)
+        .then(response => {
+          console.log('Respuesta OP1:', response)
+        })
+  }else if(req.body.opcion == 2) {
+    // Salida
+    
+    const data = [
+      new Date(req.body.fecha),
+      req.body.detalle,
+      req.body.valor_unitario,
+      0,
+      0,
+      req.body.cantidad,
+      req.body.cantidad,
+      req.body.cantidad,
+      req.body.cantidad,
+      req.body.id_product
+    ]
+    client.query(sql, data)
+      .then(response => {
+        console.log('Respuesta OP2:', response)
+      })
+  }
+  console.log(req.body)
 })
 
 app.post('/save-kardex', (req, res) => {

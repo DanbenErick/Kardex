@@ -2,6 +2,7 @@ import React, { useState ,useEffect } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
+import Loader from './Loader.jsx'
 
 const Tabla = function(props) {
   
@@ -66,7 +67,9 @@ const Tabla = function(props) {
           (
             <tbody>
               <tr>
-                <td colSpan="9">Cargando</td>
+                <td colSpan="9">
+                  <Loader />
+                </td>
               </tr>
             </tbody>
           )

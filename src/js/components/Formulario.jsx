@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+
 import axios from 'axios'
 
 const Formulario = (props) => {
@@ -62,6 +64,16 @@ const Formulario = (props) => {
   }
 
   const sendData = (event) => {
+    const data = {
+      fecha: kardex.fecha,
+      detalle: kardex.detalle,
+      valor_unitario: kardex.valor_unitario,
+      opcion: kardex.opcion,
+      cantidad: kardex.cantidad,
+      id_product: props.product_selected
+    }
+    console.log(data)
+    axios.post('/save-product', data)
     event.preventDefault()
     console.log(`
       Enviaste los siguienes datos:
@@ -142,6 +154,15 @@ const Formulario = (props) => {
   )
 }
 
+const mapStateToProps = (state) => {
+  console.log("Estado: ",state)
+  return {
+    product_selected: state.product_selected
+  }
+}
 
+const mapDispatchToProps = dispatch => {
 
-export default Formulario
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Formulario)
