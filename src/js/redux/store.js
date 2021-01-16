@@ -5,6 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 const initialState = {
   items: [],
   product_selected: '',
+  name_product_selected: '',
   last_item_kardex: {}
 }
 
@@ -26,7 +27,8 @@ const reducerKardex = (state = initialState, action) => {
     return {
       ...state,
       product_selected: action.product_selected,
-      last_item_kardex: {}
+      last_item_kardex: {},
+      name_product_selected: action.name_product
     }
   }
   if(action.type === "ADD_REGISTER_TO_KARDEX") {

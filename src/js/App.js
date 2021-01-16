@@ -12,8 +12,11 @@ const App = () => {
     <Provider store={store}>
       <div>
         <Item />
+        <div className="ui section divider"></div>
         <Formulario />
+        <div className="ui section divider"></div>
         <Tabla />
+        <div className="ui section divider"></div>
       </div>
     </Provider>
   )  

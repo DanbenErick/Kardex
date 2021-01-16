@@ -151,7 +151,7 @@ const Formulario = ({product_selected, addRegisterToKardex}) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log("Estado: ",state)
+  // console.log("Estado: ",state)
   return {
     product_selected: state.product_selected
   }

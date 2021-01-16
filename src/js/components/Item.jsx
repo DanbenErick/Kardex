@@ -27,17 +27,18 @@ const Item = (props) => {
 
   useEffect(function() {
     getItems()
-    console.log('Se ejecuto otra vez')
+    // console.log('Se ejecuto otra vez')
   },[])
 
   const handleChangeItem = (event) => {
-    props.setIdProductKardex(event.target.value)
+    // console.log("Select:", event.target)
+    props.setIdProductKardex(event.target.value, event.target[event.target.selectedIndex].text)
   }
 
   return (
     <div>
       <div className="">
-        <h1>Item de Almacen</h1>
+        <h1>Almacen</h1>
         <form>
           <div className="ui form">
             {/* <div className="one fields"> */}
@@ -71,10 +72,11 @@ const mapDispatchToProps = dispatch => ({
       items: items
     })
   },
-  setIdProductKardex(id) {
+  setIdProductKardex(id, name) {
     dispatch({
       type: 'GET_KARDEX_PRODUCT',
-      product_selected: id
+      product_selected: id,
+      name_product: name
     })
   }
 })

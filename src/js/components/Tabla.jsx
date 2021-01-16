@@ -1,6 +1,7 @@
 import React, { useState ,useEffect } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
+import moment from 'moment'
 
 import Loader from './Loader.jsx'
 
@@ -13,7 +14,7 @@ const Tabla = function(props) {
     load: false
   })
   const getKardex = async () => {
-    if(kardex.id != '') {
+    if(props.product_selected != '') {
       setKardex({
         init: false,
         id: props.product_selected,
@@ -51,9 +52,9 @@ const Tabla = function(props) {
   const TablaCargado = _ => (
     <tbody>
       {
-        kardex.kardex.map((element) => (
-          <tr>
-            <td>{element.fecha}</td>
+        kardex.kardex.map((element, index) => (
+          <tr key={index}>
+            <td>{moment(element.fecha).format("DD/MM/YYYY")}</td>
             <td>{element.detalle}</td>
             <td>{element.valor_unitario}</td>
             <td>{element.entrada_cantidad}</td>
@@ -71,11 +72,11 @@ const Tabla = function(props) {
 
   return (
     <div>
-      <h1>Id de Producto {props.product_selected}</h1>
+      <h1>{props.name_product}</h1>
       <table className="ui celled table">
         <thead>
           <tr>
-            <th colSpan="3"></th>
+            <th colSpan="3">{props.name_product}</th>
             <th colSpan="2">Entrada</th>
             <th colSpan="2">Salida</th>
             <th colSpan="2">Saldo</th>
@@ -114,9 +115,11 @@ const Tabla = function(props) {
 }
 
 const mapStateToProps = (state) => {
+  // console.log("Estado tabla:", state)
   return {
     product_selected: state.product_selected,
-    last_item_kardex: state.last_item_kardex
+    last_item_kardex: state.last_item_kardex,
+    name_product: state.name_product_selected
   }
 }
 
