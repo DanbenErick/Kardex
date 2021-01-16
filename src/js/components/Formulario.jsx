@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import axios from 'axios'
 
-const Formulario = (props) => {
+const Formulario = ({product_selected, addRegisterToKardex}) => {
 
   const [ kardex, setKardex ] = useState({
     fecha: '',
@@ -64,25 +64,21 @@ const Formulario = (props) => {
   }
 
   const sendData = (event) => {
+    event.preventDefault()
     const data = {
       fecha: kardex.fecha,
       detalle: kardex.detalle,
       valor_unitario: kardex.valor_unitario,
       opcion: kardex.opcion,
       cantidad: kardex.cantidad,
-      id_product: props.product_selected
+      id_product: product_selected
     }
     console.log(data)
+    addRegisterToKardex(data)
     axios.post('/save-product', data)
-    event.preventDefault()
-    console.log(`
-      Enviaste los siguienes datos:
-        fecha: ${kardex.fecha}
-        detalle: ${kardex.detalle}
-        valor unitario: ${kardex.valor_unitario}
-        opcion: ${kardex.opcion}
-        cantidad: ${kardex.cantidad}
-    `)
+      .then(response => {
+        console.log("Respuesa POST: ",response.data)
+      })
   }
 
   return (
@@ -162,7 +158,14 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => {
-
+  return {
+    addRegisterToKardex(item) {
+      dispatch({
+        type: 'ADD_REGISTER_TO_KARDEX',
+        itemSend: item
+      })
+    }
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Formulario)

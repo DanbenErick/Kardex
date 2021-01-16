@@ -15,6 +15,7 @@ const Item = (props) => {
   const getItems = _ => {
     axios.get('/get-products')
       .then( response => {
+        props.setItemsToStore(response.data)
         setItem({
           items: response.data
         })        
@@ -36,12 +37,13 @@ const Item = (props) => {
   return (
     <div>
       <div className="">
-        <h1>Item</h1>
-        <form action="">
+        <h1>Item de Almacen</h1>
+        <form>
           <div className="ui form">
             {/* <div className="one fields"> */}
               <div className="field">
-                <select onChange={handleChangeItem}> 
+                <select onChange={handleChangeItem}>
+                  <option value="null">Selecciona un Item</option>
                   {
                     item.items.map(element => (
                       <option key={element.id} value={element.id}>{element.nombre}</option>
@@ -63,6 +65,12 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  setItemsToStore(items) {
+    dispatch({
+      type: 'SET_ITEMS_TO_STORE',
+      items: items
+    })
+  },
   setIdProductKardex(id) {
     dispatch({
       type: 'GET_KARDEX_PRODUCT',

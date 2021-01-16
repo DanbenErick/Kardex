@@ -3,7 +3,9 @@ import axios from 'axios'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 const initialState = {
-  product_selected: ''
+  items: [],
+  product_selected: '',
+  last_item_kardex: {}
 }
 
 const reducerKardex = (state = initialState, action) => {
@@ -23,7 +25,21 @@ const reducerKardex = (state = initialState, action) => {
     console.log(action)
     return {
       ...state,
-      product_selected: action.product_selected
+      product_selected: action.product_selected,
+      last_item_kardex: {}
+    }
+  }
+  if(action.type === "ADD_REGISTER_TO_KARDEX") {
+    console.log("Boton: ",state)
+    return {
+      ...state,
+      last_item_kardex: action.itemSend
+    }
+  }
+  if(action.type === "SET_ITEMS_TO_STORE") {
+    return {
+      ...state,
+      items: action.items
     }
   }
   return state

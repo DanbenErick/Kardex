@@ -91,6 +91,9 @@ app.post('/save-product', (req, res) => {
       })
   }
   console.log(req.body)
+  res.json({
+    ok: true
+  })
 })
 
 app.post('/save-kardex', (req, res) => {

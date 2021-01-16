@@ -7,25 +7,25 @@ import Loader from './Loader.jsx'
 const Tabla = function(props) {
   
   const [kardex, setKardex] = useState({
+    init: true,
     id: props.product_selected || '',
     kardex: [],
     load: false
   })
   const getKardex = async () => {
-    if(kardex.id != null) {
+    if(kardex.id != '') {
       setKardex({
+        init: false,
         id: props.product_selected,
         kardex: [],
         load: true
       })
       try {
         const respuesta = await axios.get(`get-kardex-product/${props.product_selected}`)
-        console.log('ID:', kardex.id)
-        console.log("Respuesta:", respuesta)
-        console.log("Final")
         setKardex({
+          init: false,
           id: props.product_selected,
-          kardex: respuesta.data,
+          kardex: [...respuesta.data, props.last_item_kardex],
           load: false
         })
       }catch(error) {
@@ -37,6 +37,37 @@ const Tabla = function(props) {
   useEffect(function() {
       getKardex()
   },[props.product_selected])
+
+  const Cargando = _ => (
+    <tbody>
+      <tr>
+        <td colSpan="9">
+          <Loader />
+        </td>
+      </tr>
+    </tbody>
+  )
+
+  const TablaCargado = _ => (
+    <tbody>
+      {
+        kardex.kardex.map((element) => (
+          <tr>
+            <td>{element.fecha}</td>
+            <td>{element.detalle}</td>
+            <td>{element.valor_unitario}</td>
+            <td>{element.entrada_cantidad}</td>
+            <td>{element.entrada_total}</td>
+            <td>{element.salida_cantidad}</td>
+            <td>{element.salida_total}</td>
+            <td>{element.saldo_cantidad}</td>
+            <td>{element.saldo_total}</td>
+          </tr>
+          )
+        )
+      }
+    </tbody>
+  )
 
   return (
     <div>
@@ -62,38 +93,20 @@ const Tabla = function(props) {
           </tr>
         </thead>
         {
-          kardex.load 
-          ?
-          (
-            <tbody>
-              <tr>
-                <td colSpan="9">
-                  <Loader />
-                </td>
-              </tr>
-            </tbody>
-          )
-            :
+          kardex.init ?
             (
-              <tbody>
-                {
-                  kardex.kardex.map((element) => (
-                    <tr>
-                      <td>{element.fecha}</td>
-                      <td>{element.detalle}</td>
-                      <td>{element.valor_unitario}</td>
-                      <td>{element.entrada_cantidad}</td>
-                      <td>{element.entrada_total}</td>
-                      <td>{element.salida_cantidad}</td>
-                      <td>{element.salida_total}</td>
-                      <td>{element.saldo_cantidad}</td>
-                      <td>{element.saldo_total}</td>
-                    </tr>
-                    )
-                  )
-                }
-              </tbody>
+              <tbody></tbody>
             )
+          :
+
+            kardex.load ?
+              (
+                <Cargando />
+              )
+              :
+              (
+                <TablaCargado />  
+              )
         }
     </table>
   </div>
@@ -102,9 +115,13 @@ const Tabla = function(props) {
 
 const mapStateToProps = (state) => {
   return {
-    product_selected: state.product_selected
+    product_selected: state.product_selected,
+    last_item_kardex: state.last_item_kardex
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  
+})
 
-export default connect(mapStateToProps)(Tabla)
+export default connect(mapStateToProps, mapDispatchToProps)(Tabla)
